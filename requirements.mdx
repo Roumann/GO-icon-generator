@@ -1,0 +1,72 @@
+# generate notification icons
+
+    ## Requirements
+
+    Support all the following screen pixel densities:
+        - mdpi (1.0x): 24 x 24 px (base density)
+        - hdpi (1.5x): 36 x 36 px
+        - xhdpi (2.0x): 48 x 48 px
+        - xxhdpi (3.0x): 72 x 72 px
+        - xxxhdpi (4.0x): 96 x 96 px
+
+    Icon must be white.
+    Icon must have a transparent background.
+
+    Icons should be saved in the following folders:
+        - android/app/src/main/res/drawable-ldpi
+        - android/app/src/main/res/drawable-mdpi
+        - android/app/src/main/res/drawable-hdpi
+        - android/app/src/main/res/drawable-xhdpi
+        - android/app/src/main/res/drawable-xxhdpi
+        - android/app/src/main/res/drawable-xxxhdpi
+
+    If destination folders dont exist, create them.
+
+    Edit android-manifest.xml and add the following line to use the new icon:
+    //TODO: add the line to use the new icon
+
+    ## Generation process:
+
+    1. Load the icon image
+    2. create a transparent background for the icon in the required size.
+    3. resize the icon to the required size
+    4. save the icon in the required folders
+        - If the folder doesn't exist, create it.
+    5. Do this for all the required densities.
+    6. Add the code to the android-manifest.xml file
+
+# generate app icons
+
+# generate splash screen - LATER LAST
+
+    ## User input
+    - path to the logo image (should be svg)
+    - background color
+
+    ## Output
+    - all these files:
+
+    android/app/src/main/res/drawable-mdpi/bootsplash_logo.png
+    android/app/src/main/res/drawable-hdpi/bootsplash_logo.png
+    android/app/src/main/res/drawable-xhdpi/bootsplash_logo.png
+    android/app/src/main/res/drawable-xxhdpi/bootsplash_logo.png
+    android/app/src/main/res/drawable-xxxhdpi/bootsplash_logo.png
+    android/app/src/main/AndroidManifest.xml
+    android/app/src/main/res/values/colors.xml
+    android/app/src/main/res/values/styles.xml
+
+    ios/YourApp/BootSplash.storyboard
+    ios/YourApp/Colors.xcassets/BootSplashBackground-hash.colorset/Contents.json
+    ios/YourApp/Images.xcassets/BootSplashLogo-hash>.imageset/Contents.json
+    ios/YourApp/Images.xcassets/BootSplashLogo-hash>.imageset/logo-hash>.png
+    ios/YourApp/Images.xcassets/BootSplashLogo-hash>.imageset/logo-hash>@2x.png
+    ios/YourApp/Images.xcassets/BootSplashLogo-hash>.imageset/logo-hash>@3x.png
+    ios/YourApp/Info.plist
+    ios/YourApp.xcodeproj/project.pbxproj
+
+    assets/bootsplash/manifest.json
+    assets/bootsplash/logo.png
+    assets/bootsplash/logo@1,5x.png
+    assets/bootsplash/logo@2x.png
+    assets/bootsplash/logo@3x.png
+    assets/bootsplash/logo@4x.png
