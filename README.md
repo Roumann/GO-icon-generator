@@ -18,4 +18,4 @@ Generates mdpi, hdpi, xhdpi, xxhdpi and xxxhdpi version of your provided icon to
 
 --TODO-- go run main.go < path-to-icon > [OPTIONAL]< padding - between 0.5 - 1.5 - default - 0.75 >
 
-Program will generate all sizes and save them to the android/app/src/main/res/drawable-< icon-density > folders. If they dont exist, it will create them for you.
+Program will generate all sizes and save them to the android/app/src/main/res/drawable-< icon-density >/ic_stat_notification_icon.png folders. If they dont exist, it will create them for you.
