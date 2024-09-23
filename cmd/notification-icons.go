@@ -1,10 +1,9 @@
-package notifications
+package generate
 
 import (
 	"fmt"
 	"image/color"
 	"os"
-	"strconv"
 
 	"github.com/disintegration/imaging"
 )
@@ -14,9 +13,8 @@ type iconValues struct {
 	multiplier float32
 }
 
-func GenerateIcons() {
+func NotificationIcons(filePath string, padding float32) {
 	var baseSize int = 24
-	var padding float32 = 0.75
 
 	icons := []iconValues{
 		{"mdpi", 1},
@@ -26,32 +24,11 @@ func GenerateIcons() {
 		{"xxxhdpi", 4},
 	}
 
-	// Get the input arguments - icon path
-	inputArgs := os.Args[1:]
-	if len(inputArgs) != 1 && len(inputArgs) != 2 {
-		fmt.Println("Usage: go run main.go <icon_path> <icon_padding - Optional, between 0.5(50%) and 1.5(150%)>")
-		os.Exit(1)
-	}
-
 	// Open the icon file
-	iconPath := inputArgs[0]
-	icon, err := imaging.Open(iconPath)
+	icon, err := imaging.Open(filePath)
 	if err != nil {
 		fmt.Println("🔴 Failed to open file:", err)
 		os.Exit(1)
-	}
-
-	if len(inputArgs) == 2 {
-		padding64, err := strconv.ParseFloat(inputArgs[1], 32)
-		if err != nil {
-			fmt.Println("🔴 Failed to parse padding: Invalid number")
-			os.Exit(1)
-		}
-		if padding64 < 0.50 || padding64 > 1.50 {
-			fmt.Println("🔴 Padding should be between 0.5 and 1.5")
-			os.Exit(1)
-		}
-		padding = float32(padding64)
 	}
 
 	for _, iconConfig := range icons {
@@ -93,5 +70,4 @@ func GenerateIcons() {
 	fmt.Println("\nPaste this code into your android-manifest.xml:")
 	fmt.Println("\n<meta-data \n android:name=\"com.google.firebase.messaging.default_notification_icon\" \n android:resource=\"@drawable/ic_stat_notification_icon\" />")
 	fmt.Println("")
-
 }

@@ -1,4 +1,4 @@
-package imageResize
+package generate
 
 // import (
 // 	"fmt"
