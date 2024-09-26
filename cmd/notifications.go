@@ -4,24 +4,12 @@ import (
 	"fmt"
 	"image/color"
 	"os"
+	"rnGen/cmd/config"
 
 	"github.com/disintegration/imaging"
-	coloredTerm "github.com/fatih/color"
+	termClr "github.com/fatih/color"
 	"github.com/spf13/cobra"
 )
-
-type iconValues struct {
-	name       string
-	multiplier float32
-}
-
-var icons = []iconValues{
-	{"mdpi", 1},
-	{"hdpi", 1.5},
-	{"xhdpi", 2},
-	{"xxhdpi", 3},
-	{"xxxhdpi", 4},
-}
 
 var cmdNotif = &cobra.Command{
 	Use:   "notif",
@@ -31,10 +19,14 @@ var cmdNotif = &cobra.Command{
 	Run: notificationIcons,
 }
 
+func init(){
+	rootCmd.AddCommand(cmdNotif)
+	cmdNotif.Flags().Float32P("padding", "p", 0.75, "Padding for the icon")
+}
 
 func notificationIcons(cmd* cobra.Command, args []string) {
-	green := coloredTerm.New(coloredTerm.FgGreen).SprintFunc()
-	red := coloredTerm.New(coloredTerm.FgRed).SprintFunc()
+	green := termClr.New(termClr.FgGreen).SprintFunc()
+	red := termClr.New(termClr.FgRed).SprintFunc()
 
 	var baseSize int = 24
 	filePath := args[0]
@@ -51,21 +43,21 @@ func notificationIcons(cmd* cobra.Command, args []string) {
 		os.Exit(1)
 	}
 
-	for _, iconConfig := range icons {
-		dirPath := "android/app/src/main/res/drawable-" + iconConfig.name
+	for _, size := range config.Sizes {
+		dirPath := "android/app/src/main/res/drawable-" + size.Name
 		filePath := dirPath + "/ic_stat_notification_icon.png"
 
 		// Create a transparent background for the icon in the required size.
 		background := imaging.New(
-			int(float32(baseSize)*iconConfig.multiplier),
-			int(float32(baseSize)*iconConfig.multiplier),
+			int(float32(baseSize)*size.Scale),
+			int(float32(baseSize)*size.Scale),
 			color.NRGBA{0, 0, 0, 0})
 
 		// Resize the icon to the required size minus padding
 		iconResized := imaging.Resize(
 			icon,
-			int((float32(22)*iconConfig.multiplier)*padding),
-			int((float32(22)*iconConfig.multiplier)*padding),
+			int((float32(22)*size.Scale)*padding),
+			int((float32(22)*size.Scale)*padding),
 			imaging.Lanczos)
 
 		// Combine the icon and the background
@@ -76,17 +68,17 @@ func notificationIcons(cmd* cobra.Command, args []string) {
 		if err != nil {
 			err := os.MkdirAll(dirPath, os.ModePerm)
 			if err != nil {
-				fmt.Println(red("Failed to create folder - "+iconConfig.name, err))
+				fmt.Println(red("Failed to create folder - "+size.Name, err))
 				os.Exit(1)
 			}
 			err = imaging.Save(finalImg, filePath)
 			if err != nil {
-				fmt.Println(red("Failed to save file - "+iconConfig.name, err))
+				fmt.Println(red("Failed to save file - "+size.Name, err))
 				os.Exit(1)
 			}
 		}
 
-		fmt.Println(green("✔"), iconConfig.name)
+		fmt.Println(green("✔"), size.Name)
 	}
 
 	fmt.Println(green("\n🎉 Notification icons generated successfully. "))
@@ -100,8 +92,3 @@ Paste this code into your android-manifest.xml:
 	
 }
 
-func init(){
-	rootCmd.AddCommand(cmdNotif)
-
-	cmdNotif.Flags().Float32P("padding", "p", 0.75, "Padding for the icon")
-}

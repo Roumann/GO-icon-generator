@@ -11,9 +11,8 @@ var rootCmd = &cobra.Command{
 	Use:   "rnGen",
 	Short: "Generate assets for bear React Native projects",
 	Long: `This tool generates notification icons, splash screen,
-	 app icons for bear React Native projects. Example:
+	 app icons for bear React Native projects. Example usage to generate notification icons:
 
-	To generate notification icons:
 	rnGen notif <path-to-icon> <padding - Optional, between 0.5(50%) and 1.5(150%), default 0.75>`,
 
 	// Uncomment the following line if your bare application
