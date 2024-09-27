@@ -43,7 +43,7 @@ func notificationIcons(cmd* cobra.Command, args []string) {
 		os.Exit(1)
 	}
 
-	for _, size := range config.Sizes {
+	for _, size := range config.NotifSizes {
 		dirPath := "android/app/src/main/res/drawable-" + size.Name
 		filePath := dirPath + "/ic_stat_notification_icon.png"
 
