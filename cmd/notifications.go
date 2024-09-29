@@ -32,8 +32,8 @@ func notificationIcons(cmd* cobra.Command, args []string) {
 	filePath := args[0]
 	padding, _ := cmd.Flags().GetFloat32("padding")
 
-	if padding < 0.50 || padding > 1.50 {
-		fmt.Println(red("Padding should be between 0.5 and 1.5"))
+	if padding < 0.20 || padding > 2 {
+		fmt.Println(red("Padding should be between 0.2 and 2"))
 		os.Exit(1)
 	}
 
